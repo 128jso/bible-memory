@@ -5,6 +5,117 @@
   width: 100%;
 }
 
+.srs-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.srs-card {
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.srs-card--lessons {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: #bfdbfe;
+}
+
+.srs-card--reviews {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fde68a;
+}
+
+.srs-card-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.srs-card--lessons .srs-card-label {
+  color: #1e40af;
+}
+
+.srs-card--reviews .srs-card-label {
+  color: #92400e;
+}
+
+.srs-card-count {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 0.15rem;
+}
+
+.srs-card--lessons .srs-card-count {
+  color: #1e3a8a;
+}
+
+.srs-card--reviews .srs-card-count {
+  color: #78350f;
+}
+
+.srs-card-sub {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.srs-card--lessons .srs-card-sub {
+  color: #1e40af;
+}
+
+.srs-card--reviews .srs-card-sub {
+  color: #92400e;
+}
+
+.srs-card-btn {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  transition: all 0.15s;
+  margin-top: auto;
+}
+
+.srs-card--lessons .srs-card-btn {
+  background: #2563eb;
+}
+
+.srs-card--lessons .srs-card-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.srs-card--reviews .srs-card-btn {
+  background: #d97706;
+}
+
+.srs-card--reviews .srs-card-btn:hover:not(:disabled) {
+  background: #b45309;
+}
+
+.srs-card-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 400px) {
+  .srs-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
 .due-section {
   margin-bottom: 2.5rem;
   padding: 1.25rem;

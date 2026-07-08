@@ -30,6 +30,7 @@ export function Settings({ onBack, onDarkModeChange }: Props) {
     darkMode: false,
     lastCollection: null,
     lastVerse: null,
+    lessonsPerDay: 12,
   });
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<{ kind: 'success' | 'error'; message: string } | null>(null);
@@ -53,6 +54,13 @@ export function Settings({ onBack, onDarkModeChange }: Props) {
     const updated = { ...settings, darkMode: !settings.darkMode };
     setSettings(updated);
     onDarkModeChange(updated.darkMode);
+    await firestore.saveSettings(updated);
+  }
+
+  async function handleLessonsPerDayChange(value: number) {
+    const clamped = Math.max(5, Math.min(25, Math.floor(value) || 0));
+    const updated = { ...settings, lessonsPerDay: clamped };
+    setSettings(updated);
     await firestore.saveSettings(updated);
   }
 
@@ -142,6 +150,16 @@ export function Settings({ onBack, onDarkModeChange }: Props) {
             onChange={handleTogglePunctuation}
           />
           <span>Ignore punctuation</span>
+        </label>
+        <label className="settings-number">
+          <span>Lessons per day</span>
+          <input
+            type="number"
+            min={5}
+            max={25}
+            value={settings.lessonsPerDay}
+            onChange={(e) => handleLessonsPerDayChange(Number(e.target.value))}
+          />
         </label>
       </section>
 

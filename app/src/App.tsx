@@ -5,6 +5,8 @@ import { Login } from './views/Login';
 import { Dashboard } from './views/Dashboard';
 import { CollectionView } from './views/CollectionView';
 import { PracticeView } from './views/PracticeView';
+import { SessionView } from './views/SessionView';
+import type { SessionVerse } from './views/SessionView';
 import { Settings } from './views/Settings';
 import { StatsView } from './views/StatsView';
 import { signOut } from './lib/auth';
@@ -15,6 +17,7 @@ type Screen =
   | { view: 'dashboard' }
   | { view: 'collection'; collection: Collection }
   | { view: 'practice'; verse: Verse; collectionId: string; collection: Collection; verses?: Verse[] }
+  | { view: 'session'; mode: 'lessons' | 'reviews'; verses: SessionVerse[] }
   | { view: 'settings' }
   | { view: 'stats' };
 
@@ -76,6 +79,17 @@ function App() {
           onPracticeVerse={(verse, collectionId, collection, verses) =>
             setScreen({ view: 'practice', verse, collectionId, collection, verses })
           }
+          onStartSession={(mode, verses) =>
+            setScreen({ view: 'session', mode, verses })
+          }
+        />
+      )}
+
+      {screen.view === 'session' && (
+        <SessionView
+          mode={screen.mode}
+          verses={screen.verses}
+          onBack={() => setScreen({ view: 'dashboard' })}
         />
       )}
 

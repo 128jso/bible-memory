@@ -317,3 +317,103 @@ html.dark .audio-control-btn--active {
   border-color: #1e7a6e;
   color: #34d399;
 }
+
+html.dark .srs-card--lessons {
+  background: linear-gradient(135deg, #1e2440 0%, #1c2e4a 100%);
+  border-color: #2e4b7a;
+}
+
+html.dark .srs-card--lessons .srs-card-label,
+html.dark .srs-card--lessons .srs-card-sub {
+  color: #93c5fd;
+}
+
+html.dark .srs-card--lessons .srs-card-count {
+  color: #dbeafe;
+}
+
+html.dark .srs-card--lessons .srs-card-btn {
+  background: #2563eb;
+  color: white;
+}
+
+html.dark .srs-card--lessons .srs-card-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+html.dark .srs-card--reviews {
+  background: linear-gradient(135deg, #2a2520 0%, #342d20 100%);
+  border-color: #4d3f1a;
+}
+
+html.dark .srs-card--reviews .srs-card-label,
+html.dark .srs-card--reviews .srs-card-sub {
+  color: #fbbf24;
+}
+
+html.dark .srs-card--reviews .srs-card-count {
+  color: #fde68a;
+}
+
+html.dark .srs-card--reviews .srs-card-btn {
+  background: #d97706;
+  color: white;
+}
+
+html.dark .srs-card--reviews .srs-card-btn:hover:not(:disabled) {
+  background: #b45309;
+}
+
+html.dark .session-view {
+  background: #1a1b2e;
+  color: #e2e8f0;
+}
+
+html.dark .session-count {
+  color: #e2e8f0;
+}
+
+html.dark .session-mode,
+html.dark .session-collection-label {
+  color: #94a3b8;
+}
+
+html.dark .session-progress-bar {
+  background: #2e3048;
+}
+
+html.dark .session-summary h2 {
+  color: #e2e8f0;
+}
+
+html.dark .session-summary-line {
+  color: #94a3b8;
+}
+
+html.dark .session-summary-accuracy {
+  color: #34d399;
+}
+
+html.dark .session-summary-icon {
+  background: #1e7a6e;
+  color: white;
+}
+
+html.dark .session-empty {
+  color: #94a3b8;
+}
+
+html.dark .settings-number {
+  color: #e2e8f0;
+}
+
+html.dark .settings-number input {
+  background: #2e3048;
+  border-color: #3d3f5c;
+  color: #e2e8f0;
+}
+
+html.dark .settings-number input:focus {
+  border-color: #1e7a6e;
+  box-shadow: 0 0 0 3px rgba(30, 122, 110, 0.15);
+}

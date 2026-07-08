@@ -33,6 +33,7 @@ export interface UserSettings {
   darkMode: boolean;
   lastCollection: string | null;
   lastVerse: string | null;
+  lessonsPerDay: number;
 }
 
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';

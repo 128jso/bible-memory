@@ -104,8 +104,17 @@ export async function getSettings(): Promise<UserSettings> {
   const { getDoc } = await import('firebase/firestore');
   const ref = userDoc('settings/prefs');
   const snap = await getDoc(ref);
-  if (snap.exists()) return snap.data() as UserSettings;
-  return { ignorePunctuation: false, darkMode: false, lastCollection: null, lastVerse: null };
+  if (snap.exists()) {
+    const data = snap.data() as Partial<UserSettings>;
+    return {
+      ignorePunctuation: data.ignorePunctuation ?? false,
+      darkMode: data.darkMode ?? false,
+      lastCollection: data.lastCollection ?? null,
+      lastVerse: data.lastVerse ?? null,
+      lessonsPerDay: data.lessonsPerDay ?? 12,
+    };
+  }
+  return { ignorePunctuation: false, darkMode: false, lastCollection: null, lastVerse: null, lessonsPerDay: 12 };
 }
 
 export async function saveSettings(settings: UserSettings) {

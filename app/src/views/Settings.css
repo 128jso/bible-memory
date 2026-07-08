@@ -51,6 +51,33 @@
   cursor: pointer;
 }
 
+.settings-number {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.settings-number input {
+  width: 4.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: center;
+  background: #ffffff;
+  color: #1e293b;
+}
+
+.settings-number input:focus {
+  outline: none;
+  border-color: #1e7a6e;
+  box-shadow: 0 0 0 3px rgba(30, 122, 110, 0.1);
+}
+
 .settings-actions {
   display: flex;
   gap: 0.75rem;
