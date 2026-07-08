@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { Collection, Verse } from '../types';
 import * as firestore from '../lib/firestore';
-import { isDueForReview } from '../lib/sm2';
+import { isDueForReview, getMasteryLevel, getMasteryColor } from '../lib/sm2';
 import { fetchVerse } from '../lib/esv';
 import './CollectionView.css';
 
@@ -278,11 +278,15 @@ export function CollectionView({ collection, onBack, onPracticeVerse }: Props) {
         <ul className="verses-list">
           {verses.map((verse) => {
             const due = isDueForReview(verse.progress);
+            const mastery = getMasteryLevel(verse.progress);
             return (
               <li key={verse.id} className="verse-item">
                 <button className="verse-btn" onClick={() => onPracticeVerse(verse, verses)}>
                   <div className="verse-info">
                     <span className="verse-reference">{verse.reference}</span>
+                    <span className="verse-mastery-badge" style={{ color: getMasteryColor(mastery) }}>
+                      {mastery}
+                    </span>
                     {due && <span className="verse-due-badge">Due</span>}
                   </div>
                   <span className="verse-next-review">

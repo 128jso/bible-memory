@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Verse } from '../types';
 import * as firestore from '../lib/firestore';
-import { isDueForReview } from '../lib/sm2';
+import { isDueForReview, getMasteryLevel, getMasteryColor, type MasteryLevel } from '../lib/sm2';
 import './StatsView.css';
 
 interface Props {
@@ -15,6 +15,7 @@ interface Stats {
   averageAccuracy: number;
   dueToday: number;
   last7Days: { date: string; label: string; accuracy: number | null }[];
+  masteryBreakdown: Record<MasteryLevel, number>;
 }
 
 const MASTERED_INTERVAL_DAYS = 21;
@@ -98,6 +99,22 @@ export function StatsView({ onBack }: Props) {
         </div>
       </section>
 
+      <section className="mastery-section">
+        <h3>Mastery Levels</h3>
+        <div className="mastery-grid">
+          {(['new', 'apprentice', 'guru', 'master', 'enlightened', 'burned'] as MasteryLevel[]).map((level) => (
+            <div key={level} className="mastery-item">
+              <div className="mastery-count" style={{ color: getMasteryColor(level) }}>
+                {stats.masteryBreakdown[level]}
+              </div>
+              <div className="mastery-label" style={{ color: getMasteryColor(level) }}>
+                {level}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="chart-section">
         <h3>Accuracy — Last 7 Days</h3>
         <div className="chart">
@@ -132,6 +149,13 @@ function computeStats(verses: Verse[]): Stats {
   const masteredVerses = verses.filter((v) => v.progress.interval >= MASTERED_INTERVAL_DAYS).length;
   const dueToday = verses.filter((v) => isDueForReview(v.progress)).length;
 
+  const masteryBreakdown: Record<MasteryLevel, number> = {
+    new: 0, apprentice: 0, guru: 0, master: 0, enlightened: 0, burned: 0,
+  };
+  for (const v of verses) {
+    masteryBreakdown[getMasteryLevel(v.progress)]++;
+  }
+
   const attempts = verses.flatMap((v) => v.progress.history);
   const averageAccuracy = attempts.length === 0
     ? 0
@@ -149,6 +173,7 @@ function computeStats(verses: Verse[]): Stats {
     averageAccuracy,
     dueToday,
     last7Days,
+    masteryBreakdown,
   };
 }
 

@@ -6,12 +6,13 @@ import './Dashboard.css';
 
 interface Props {
   onSelectCollection: (collection: Collection) => void;
-  onPracticeVerse: (verse: Verse, collectionId: string, collection: Collection) => void;
+  onPracticeVerse: (verse: Verse, collectionId: string, collection: Collection, verses: Verse[]) => void;
 }
 
 export function Dashboard({ onSelectCollection, onPracticeVerse }: Props) {
   const [collections, setCollections] = useState<Collection[]>([]);
   const [verseCounts, setVerseCounts] = useState<Record<string, number>>({});
+  const [versesMap, setVersesMap] = useState<Record<string, Verse[]>>({});
   const [dueVerses, setDueVerses] = useState<{ verse: Verse; collectionId: string; collectionName: string; collection: Collection }[]>([]);
   const [newName, setNewName] = useState('');
   const [showAdd, setShowAdd] = useState(false);
@@ -28,9 +29,11 @@ export function Dashboard({ onSelectCollection, onPracticeVerse }: Props) {
 
     const due: typeof dueVerses = [];
     const counts: Record<string, number> = {};
+    const vMap: Record<string, Verse[]> = {};
     for (const col of cols) {
       const verses = await firestore.getVerses(col.id);
       counts[col.id] = verses.length;
+      vMap[col.id] = verses;
       for (const verse of verses) {
         if (isDueForReview(verse.progress)) {
           due.push({ verse, collectionId: col.id, collectionName: col.name, collection: col });
@@ -38,6 +41,7 @@ export function Dashboard({ onSelectCollection, onPracticeVerse }: Props) {
       }
     }
     setVerseCounts(counts);
+    setVersesMap(vMap);
     setDueVerses(due);
     setLoading(false);
   }
@@ -71,7 +75,7 @@ export function Dashboard({ onSelectCollection, onPracticeVerse }: Props) {
               <li key={verse.id} className="due-item">
                 <button
                   className="due-btn"
-                  onClick={() => onPracticeVerse(verse, collectionId, collection)}
+                  onClick={() => onPracticeVerse(verse, collectionId, collection, versesMap[collectionId] || [])}
                 >
                   <span className="due-reference">{verse.reference}</span>
                   <span className="due-collection">{collectionName}</span>

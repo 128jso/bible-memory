@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { PracticeTyping } from '../components/PracticeTyping';
 import { AudioPlayer } from '../components/AudioPlayer';
 import type { DifficultyLevel, Verse } from '../types';
-import { updateProgress } from '../lib/sm2';
+import { updateProgress, getMasteryLevel } from '../lib/sm2';
 import * as firestore from '../lib/firestore';
 import './PracticeView.css';
 
@@ -14,8 +14,15 @@ interface Props {
   verses?: Verse[];
 }
 
+function getDefaultDifficulty(verse: Verse): DifficultyLevel {
+  const mastery = getMasteryLevel(verse.progress);
+  if (mastery === 'guru' || mastery === 'master' || mastery === 'enlightened' || mastery === 'burned') return 'hard';
+  if (mastery === 'apprentice') return 'medium';
+  return 'easy';
+}
+
 export function PracticeView({ verse, collectionId, onBack, onNavigate, verses }: Props) {
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>('easy');
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>(getDefaultDifficulty(verse));
   const [ignorePunctuation, setIgnorePunctuation] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
   const [result, setResult] = useState<{
@@ -26,6 +33,10 @@ export function PracticeView({ verse, collectionId, onBack, onNavigate, verses }
   useEffect(() => {
     firestore.getSettings().then((s) => setIgnorePunctuation(s.ignorePunctuation));
   }, []);
+
+  useEffect(() => {
+    setDifficulty(getDefaultDifficulty(verse));
+  }, [verse.id]);
 
   const verseText = verse.customText || verse.text;
 
@@ -49,6 +60,7 @@ export function PracticeView({ verse, collectionId, onBack, onNavigate, verses }
   function handlePrev() {
     if (hasPrev && verses && onNavigate) {
       setResult(null);
+      setAutoPlay(false);
       onNavigate(verses[currentIndex - 1]);
     }
   }
@@ -136,7 +148,7 @@ export function PracticeView({ verse, collectionId, onBack, onNavigate, verses }
           <AudioPlayer reference={verse.reference} autoPlay={autoPlay} onTrackEnded={() => handleNext(true)} />
           <button
             className="audio-control-btn"
-            onClick={handleNext}
+            onClick={() => handleNext(false)}
             disabled={!hasNext}
             aria-label="Next verse"
           >

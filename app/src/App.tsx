@@ -73,8 +73,8 @@ function App() {
           onSelectCollection={(collection) =>
             setScreen({ view: 'collection', collection })
           }
-          onPracticeVerse={(verse, collectionId, collection) =>
-            setScreen({ view: 'practice', verse, collectionId, collection })
+          onPracticeVerse={(verse, collectionId, collection, verses) =>
+            setScreen({ view: 'practice', verse, collectionId, collection, verses })
           }
         />
       )}

@@ -61,11 +61,15 @@ export function PracticeTyping({
   const [results, setResults] = useState<CharState[]>(charStates);
   const [currentTypableIdx, setCurrentTypableIdx] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const firstAttemptRef = useRef<Map<number, boolean>>(new Map());
+  const [attemptStats, setAttemptStats] = useState({ attempted: 0, correct: 0 });
 
   useEffect(() => {
     setResults(charStates);
     setCurrentTypableIdx(0);
     setCompleted(false);
+    firstAttemptRef.current = new Map();
+    setAttemptStats({ attempted: 0, correct: 0 });
     inputRef.current?.focus();
   }, [charStates]);
 
@@ -100,6 +104,14 @@ export function PracticeTyping({
       const expected = charStates[charIdx].char;
       const status = compareChar(e.key, expected, ignorePunctuation);
 
+      if (!firstAttemptRef.current.has(charIdx)) {
+        firstAttemptRef.current.set(charIdx, status === 'correct');
+        setAttemptStats((prev) => ({
+          attempted: prev.attempted + 1,
+          correct: prev.correct + (status === 'correct' ? 1 : 0),
+        }));
+      }
+
       setResults((prev) => {
         const next = [...prev];
         next[charIdx] = { ...next[charIdx], status };
@@ -111,12 +123,8 @@ export function PracticeTyping({
 
       if (nextTypableIdx >= typableIndices.length) {
         setCompleted(true);
-        const correctCount = results.filter(
-          (r, i) =>
-            typableIndices.includes(i) &&
-            (i === charIdx ? status === 'correct' : r.status === 'correct')
-        ).length;
-
+        const firstAttempts = firstAttemptRef.current;
+        const correctCount = typableIndices.filter((idx) => firstAttempts.get(idx) === true).length;
         const totalTypable = typableIndices.length;
         const accuracy = totalTypable > 0 ? correctCount / totalTypable : 1;
         onComplete(accuracy);
@@ -133,14 +141,33 @@ export function PracticeTyping({
     ]
   );
 
+  const cursorRef = useRef<HTMLSpanElement | null>(null);
+
   const currentCharIdx =
     currentTypableIdx < typableIndices.length
       ? typableIndices[currentTypableIdx]
       : -1;
 
+  useEffect(() => {
+    if (cursorRef.current) {
+      cursorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [currentCharIdx]);
+
+  const liveAccuracy = attemptStats.attempted > 0
+    ? Math.round((attemptStats.correct / attemptStats.attempted) * 100)
+    : 100;
+
   return (
     <div className="practice-typing" onClick={() => inputRef.current?.focus()}>
-      <div className="practice-reference">{reference}</div>
+      <div className="practice-top-info">
+        <div className="practice-reference">{reference}</div>
+        {attemptStats.attempted > 0 && (
+          <div className={`live-accuracy ${liveAccuracy === 100 ? 'live-accuracy--perfect' : liveAccuracy >= 80 ? 'live-accuracy--good' : 'live-accuracy--low'}`}>
+            {liveAccuracy}%
+          </div>
+        )}
+      </div>
 
       {difficulty === 'hard' ? (
         <div className="practice-hint">Type the verse from memory</div>
@@ -153,6 +180,7 @@ export function PracticeTyping({
           ) : (
             <span
               key={i}
+              ref={i === currentCharIdx ? cursorRef : undefined}
               className={`char char--${charState.status} ${i === currentCharIdx ? 'char--cursor' : ''}`}
             >
               {charState.status === 'pending' && (difficulty === 'hard' || difficulty === 'medium')

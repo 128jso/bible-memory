@@ -7,11 +7,37 @@
   min-height: 300px;
 }
 
+.practice-top-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
 .practice-reference {
   font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
   color: #1e293b;
+}
+
+.live-accuracy {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+.live-accuracy--perfect {
+  color: #16a34a;
+}
+
+.live-accuracy--good {
+  color: #ca8a04;
+}
+
+.live-accuracy--low {
+  color: #dc2626;
 }
 
 .practice-hint {

@@ -16,7 +16,8 @@ export function updateProgress(
   accuracy: number,
   level: DifficultyLevel
 ): ProgressRecord {
-  const quality = Math.round(accuracy * 5);
+  const adjustedAccuracy = accuracy >= 0.95 ? 1.0 : accuracy;
+  const quality = Math.round(adjustedAccuracy * 5);
   const today = new Date().toISOString().split('T')[0];
 
   let { easeFactor, interval, repetitions } = progress;
@@ -63,4 +64,27 @@ export function isDueForReview(progress: ProgressRecord): boolean {
   if (!progress.nextReview) return true;
   const today = new Date().toISOString().split('T')[0];
   return progress.nextReview <= today;
+}
+
+export type MasteryLevel = 'new' | 'apprentice' | 'guru' | 'master' | 'enlightened' | 'burned';
+
+export function getMasteryLevel(progress: ProgressRecord): MasteryLevel {
+  const { repetitions, interval } = progress;
+  if (repetitions === 0) return 'new';
+  if (interval < 4) return 'apprentice';
+  if (interval < 14) return 'guru';
+  if (interval < 30) return 'master';
+  if (interval < 120) return 'enlightened';
+  return 'burned';
+}
+
+export function getMasteryColor(level: MasteryLevel): string {
+  switch (level) {
+    case 'new': return '#94a3b8';
+    case 'apprentice': return '#f472b6';
+    case 'guru': return '#a78bfa';
+    case 'master': return '#60a5fa';
+    case 'enlightened': return '#fbbf24';
+    case 'burned': return '#34d399';
+  }
 }

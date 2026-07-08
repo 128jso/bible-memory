@@ -180,6 +180,12 @@
   font-size: 0.95rem;
 }
 
+.verse-mastery-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
 .verse-due-badge {
   font-size: 0.65rem;
   padding: 0.2rem 0.5rem;
