@@ -110,21 +110,10 @@ export function Settings({ onBack, onDarkModeChange }: Props) {
         throw new Error('Invalid backup: missing collections array.');
       }
 
-      let colCount = 0;
-      let verseCount = 0;
-      for (const col of parsed.collections) {
-        if (!col.name || !Array.isArray(col.verses)) continue;
-        const created = await firestore.addCollection(col.name);
-        colCount++;
-        for (const v of col.verses) {
-          if (!v.reference || typeof v.text !== 'string') continue;
-          await firestore.addVerse(created.id, v.reference, v.text);
-          verseCount++;
-        }
-      }
+      const result = await firestore.batchImport(parsed.collections);
       setStatus({
         kind: 'success',
-        message: `Imported ${colCount} collection${colCount === 1 ? '' : 's'} and ${verseCount} verse${verseCount === 1 ? '' : 's'}.`,
+        message: `Imported ${result.collections} collection${result.collections === 1 ? '' : 's'} and ${result.verses} verse${result.verses === 1 ? '' : 's'}.`,
       });
     } catch (err) {
       setStatus({ kind: 'error', message: `Import failed: ${err instanceof Error ? err.message : String(err)}` });

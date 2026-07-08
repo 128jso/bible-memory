@@ -65,9 +65,9 @@ export function Dashboard({ onSelectCollection, onPracticeVerse }: Props) {
     <div className="dashboard">
       {dueVerses.length > 0 && (
         <section className="due-section">
-          <h2>Due for Review</h2>
+          <h2>Due for Review ({dueVerses.length})</h2>
           <ul className="due-list">
-            {dueVerses.map(({ verse, collectionId, collectionName, collection }) => (
+            {dueVerses.slice(0, 5).map(({ verse, collectionId, collectionName, collection }) => (
               <li key={verse.id} className="due-item">
                 <button
                   className="due-btn"
@@ -79,6 +79,9 @@ export function Dashboard({ onSelectCollection, onPracticeVerse }: Props) {
               </li>
             ))}
           </ul>
+          {dueVerses.length > 5 && (
+            <p className="due-more">+ {dueVerses.length - 5} more due for review</p>
+          )}
         </section>
       )}
 

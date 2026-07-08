@@ -6,6 +6,7 @@ import {
   deleteDoc,
   query,
   orderBy,
+  writeBatch,
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { getCurrentUser } from './auth';
@@ -109,4 +110,60 @@ export async function getSettings(): Promise<UserSettings> {
 
 export async function saveSettings(settings: UserSettings) {
   await setDoc(userDoc('settings/prefs'), settings);
+}
+
+export async function batchImport(
+  collections: { name: string; verses: { reference: string; text: string; customText?: string | null; progress?: Verse['progress'] }[] }[]
+): Promise<{ collections: number; verses: number }> {
+  const uid = getUserId();
+  if (!uid) throw new Error('Not authenticated');
+
+  let colCount = 0;
+  let verseCount = 0;
+  const existingCols = await getCollections();
+
+  for (const col of collections) {
+    if (!col.name || !Array.isArray(col.verses)) continue;
+
+    const colId = crypto.randomUUID();
+    const colRef = doc(db, `users/${uid}/collections/${colId}`);
+
+    const verses = col.verses.filter((v) => v.reference && v.text);
+    const allWrites: { ref: ReturnType<typeof doc>; data: Record<string, unknown> }[] = [];
+
+    allWrites.push({
+      ref: colRef,
+      data: { name: col.name, order: existingCols.length + colCount },
+    });
+
+    verses.forEach((v, i) => {
+      const verseId = crypto.randomUUID();
+      const verseRef = doc(db, `users/${uid}/collections/${colId}/verses/${verseId}`);
+      allWrites.push({
+        ref: verseRef,
+        data: {
+          reference: v.reference,
+          text: v.text,
+          customText: v.customText ?? null,
+          order: i,
+          progress: v.progress ?? createInitialProgress(),
+        },
+      });
+    });
+
+    // Firestore batch limit is 500 writes per batch
+    for (let i = 0; i < allWrites.length; i += 500) {
+      const chunk = allWrites.slice(i, i + 500);
+      const batch = writeBatch(db);
+      for (const { ref, data } of chunk) {
+        batch.set(ref, data);
+      }
+      await batch.commit();
+    }
+
+    colCount++;
+    verseCount += verses.length;
+  }
+
+  return { collections: colCount, verses: verseCount };
 }
