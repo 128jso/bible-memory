@@ -47,3 +47,13 @@
 .login-btn:hover {
   background: #166b60;
 }
+
+.login-error {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.85rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #b91c1c;
+  font-size: 0.875rem;
+}

@@ -56,7 +56,7 @@ function App() {
             onClick={() => setScreen({ view: 'stats' })}
             aria-label="Stats"
           >
-            &#9776;
+            📊
           </button>
           <button
             className="settings-btn"

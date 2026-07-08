@@ -136,7 +136,6 @@ export function PracticeTyping({
       typableIndices,
       charStates,
       ignorePunctuation,
-      results,
       onComplete,
     ]
   );

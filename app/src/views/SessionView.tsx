@@ -89,8 +89,8 @@ export function SessionView({ mode, verses, onBack }: Props) {
   }
 
   if (isComplete) {
-    const total = accuracies.length;
-    const avg = total > 0 ? accuracies.reduce((s, a) => s + a, 0) / total : 0;
+    const completed = accuracies.length;
+    const avg = completed > 0 ? accuracies.reduce((s, a) => s + a, 0) / completed : 0;
     return (
       <div className="session-view">
         <div className="session-top-bar">
@@ -100,7 +100,7 @@ export function SessionView({ mode, verses, onBack }: Props) {
           <div className="session-summary-icon">✓</div>
           <h2>Session complete!</h2>
           <p className="session-summary-line">
-            {total} {total === 1 ? 'verse' : 'verses'} {mode === 'lessons' ? 'learned' : 'reviewed'}.
+            {completed} {completed === 1 ? 'verse' : 'verses'} {mode === 'lessons' ? 'learned' : 'reviewed'}.
           </p>
           <p className="session-summary-accuracy">
             Average accuracy: {Math.round(avg * 100)}%

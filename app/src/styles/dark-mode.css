@@ -417,3 +417,77 @@ html.dark .settings-number input:focus {
   border-color: #1e7a6e;
   box-shadow: 0 0 0 3px rgba(30, 122, 110, 0.15);
 }
+
+html.dark .stats {
+  background: #1a1b2e;
+  color: #e2e8f0;
+}
+
+html.dark .stats-grid {
+  background: transparent;
+}
+
+html.dark .stat-card {
+  background: #242538;
+  border-color: #2e3048;
+  color: #e2e8f0;
+}
+
+html.dark .stat-value {
+  color: #e2e8f0;
+}
+
+html.dark .stat-label {
+  color: #94a3b8;
+}
+
+html.dark .chart-section,
+html.dark .mastery-section {
+  background: #242538;
+  border-color: #2e3048;
+  color: #e2e8f0;
+}
+
+html.dark .chart-section h2,
+html.dark .mastery-section h2 {
+  color: #e2e8f0;
+}
+
+html.dark .chart-col {
+  background: transparent;
+}
+
+html.dark .chart-bar {
+  background: #1e7a6e;
+}
+
+html.dark .chart-bar-empty {
+  background: #2e3048;
+}
+
+html.dark .chart-label {
+  color: #94a3b8;
+}
+
+html.dark .chart-value {
+  color: #e2e8f0;
+}
+
+html.dark .mastery-item {
+  background: #2e3048;
+  border-color: #3d3f5c;
+}
+
+html.dark .mastery-count {
+  color: #e2e8f0;
+}
+
+html.dark .mastery-label {
+  color: #94a3b8;
+}
+
+html.dark .stats-empty {
+  background: #242538;
+  border-color: #2e3048;
+  color: #94a3b8;
+}

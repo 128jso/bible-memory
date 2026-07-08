@@ -31,6 +31,7 @@ export function Dashboard({ onSelectCollection, onPracticeVerse, onStartSession 
   const [newName, setNewName] = useState('');
   const [showAdd, setShowAdd] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     loadData();
@@ -38,37 +39,44 @@ export function Dashboard({ onSelectCollection, onPracticeVerse, onStartSession 
 
   async function loadData() {
     setLoading(true);
-    const [cols, settings] = await Promise.all([
-      firestore.getCollections(),
-      firestore.getSettings(),
-    ]);
-    setCollections(cols);
-    setLessonsPerDay(settings.lessonsPerDay);
+    setLoadError(null);
+    try {
+      const [cols, settings] = await Promise.all([
+        firestore.getCollections(),
+        firestore.getSettings(),
+      ]);
+      setCollections(cols);
+      setLessonsPerDay(settings.lessonsPerDay);
 
-    const due: typeof dueVerses = [];
-    const news: SessionVerse[] = [];
-    const reviews: SessionVerse[] = [];
-    const counts: Record<string, number> = {};
-    const vMap: Record<string, Verse[]> = {};
-    for (const col of cols) {
-      const verses = await firestore.getVerses(col.id);
-      counts[col.id] = verses.length;
-      vMap[col.id] = verses;
-      for (const verse of verses) {
-        if (isNewVerse(verse)) {
-          news.push({ verse, collectionId: col.id, collection: col });
-        } else if (isDueForReview(verse.progress)) {
-          due.push({ verse, collectionId: col.id, collectionName: col.name, collection: col });
-          reviews.push({ verse, collectionId: col.id, collection: col });
+      const due: typeof dueVerses = [];
+      const news: SessionVerse[] = [];
+      const reviews: SessionVerse[] = [];
+      const counts: Record<string, number> = {};
+      const vMap: Record<string, Verse[]> = {};
+      for (const col of cols) {
+        const verses = await firestore.getVerses(col.id);
+        counts[col.id] = verses.length;
+        vMap[col.id] = verses;
+        for (const verse of verses) {
+          if (isNewVerse(verse)) {
+            news.push({ verse, collectionId: col.id, collection: col });
+          } else if (isDueForReview(verse.progress)) {
+            due.push({ verse, collectionId: col.id, collectionName: col.name, collection: col });
+            reviews.push({ verse, collectionId: col.id, collection: col });
+          }
         }
       }
+      setVerseCounts(counts);
+      setVersesMap(vMap);
+      setDueVerses(due);
+      setNewVerses(news);
+      setReviewVerses(reviews);
+    } catch (err) {
+      console.error('Failed to load dashboard data:', err);
+      setLoadError('Could not load your data. Check your connection and try again.');
+    } finally {
+      setLoading(false);
     }
-    setVerseCounts(counts);
-    setVersesMap(vMap);
-    setDueVerses(due);
-    setNewVerses(news);
-    setReviewVerses(reviews);
-    setLoading(false);
   }
 
   async function handleAddCollection(e: React.FormEvent) {
@@ -88,6 +96,17 @@ export function Dashboard({ onSelectCollection, onPracticeVerse, onStartSession 
 
   if (loading) {
     return <div className="dashboard"><p className="empty-state">Loading...</p></div>;
+  }
+
+  if (loadError) {
+    return (
+      <div className="dashboard">
+        <p className="empty-state">{loadError}</p>
+        <div style={{ textAlign: 'center' }}>
+          <button className="btn-small btn-primary" onClick={loadData}>Retry</button>
+        </div>
+      </div>
+    );
   }
 
   const lessonsAvailable = Math.min(newVerses.length, lessonsPerDay);

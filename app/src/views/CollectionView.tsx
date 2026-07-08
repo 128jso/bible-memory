@@ -27,6 +27,7 @@ export function CollectionView({ collection, onBack, onPracticeVerse }: Props) {
   const [fetchError, setFetchError] = useState('');
   const [editing, setEditing] = useState(false);
   const [editName, setEditName] = useState(collection.name);
+  const [displayName, setDisplayName] = useState(collection.name);
   const [loading, setLoading] = useState(true);
   const [bulkInput, setBulkInput] = useState('');
   const [bulkFetching, setBulkFetching] = useState(false);
@@ -70,9 +71,10 @@ export function CollectionView({ collection, onBack, onPracticeVerse }: Props) {
   }
 
   async function handleRename() {
-    if (editName.trim() && editName.trim() !== collection.name) {
-      await firestore.renameCollection(collection.id, editName.trim());
-      collection.name = editName.trim();
+    const trimmed = editName.trim();
+    if (trimmed && trimmed !== displayName) {
+      await firestore.renameCollection(collection.id, trimmed);
+      setDisplayName(trimmed);
     }
     setEditing(false);
   }
@@ -146,13 +148,13 @@ export function CollectionView({ collection, onBack, onPracticeVerse }: Props) {
             onBlur={handleRename}
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleRename();
-              if (e.key === 'Escape') { setEditName(collection.name); setEditing(false); }
+              if (e.key === 'Escape') { setEditName(displayName); setEditing(false); }
             }}
             autoFocus
           />
         ) : (
           <h2 className="editable-title" onClick={() => setEditing(true)}>
-            {collection.name}
+            {displayName}
           </h2>
         )}
         <div className="header-actions">

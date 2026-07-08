@@ -51,10 +51,17 @@ export async function renameCollection(id: string, name: string) {
 
 export async function deleteCollection(id: string) {
   const verses = await getVerses(id);
-  for (const verse of verses) {
-    await deleteDoc(userDoc(`collections/${id}/verses/${verse.id}`));
+  const refs = verses.map((v) => userDoc(`collections/${id}/verses/${v.id}`));
+  refs.push(userDoc(`collections/${id}`));
+
+  for (let i = 0; i < refs.length; i += 500) {
+    const chunk = refs.slice(i, i + 500);
+    const batch = writeBatch(db);
+    for (const ref of chunk) {
+      batch.delete(ref);
+    }
+    await batch.commit();
   }
-  await deleteDoc(userDoc(`collections/${id}`));
 }
 
 export async function getVerses(collectionId: string): Promise<Verse[]> {

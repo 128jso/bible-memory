@@ -12,19 +12,6 @@
   margin-bottom: 1rem;
 }
 
-.back-btn {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.back-btn:hover {
-  background: #f8fafc;
-}
-
 .practice-controls {
   display: flex;
   justify-content: space-between;

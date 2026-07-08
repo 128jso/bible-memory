@@ -23,6 +23,10 @@ export function AudioPlayer({ reference, autoPlay, onTrackEnded }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const repeatRef = useRef(repeat);
   repeatRef.current = repeat;
+  const speedIndexRef = useRef(speedIndex);
+  speedIndexRef.current = speedIndex;
+  const onTrackEndedRef = useRef(onTrackEnded);
+  onTrackEndedRef.current = onTrackEnded;
 
   useEffect(() => {
     return () => {
@@ -42,14 +46,14 @@ export function AudioPlayer({ reference, autoPlay, onTrackEnded }: Props) {
     if (autoPlay) {
       setTimeout(() => {
         const audio = new Audio(getAudioUrl(reference));
-        audio.playbackRate = SPEEDS[speedIndex];
+        audio.playbackRate = SPEEDS[speedIndexRef.current];
         audio.onended = () => {
           if (repeatRef.current === 'one') {
             audio.currentTime = 0;
             audio.play();
           } else if (repeatRef.current === 'all') {
             setPlaying(false);
-            onTrackEnded?.();
+            onTrackEndedRef.current?.();
           } else {
             setPlaying(false);
           }
@@ -59,19 +63,19 @@ export function AudioPlayer({ reference, autoPlay, onTrackEnded }: Props) {
         audio.play().then(() => setPlaying(true));
       }, 100);
     }
-  }, [reference]);
+  }, [reference, autoPlay]);
 
   function getOrCreateAudio(): HTMLAudioElement {
     if (!audioRef.current) {
       const audio = new Audio(getAudioUrl(reference));
-      audio.playbackRate = SPEEDS[speedIndex];
+      audio.playbackRate = SPEEDS[speedIndexRef.current];
       audio.onended = () => {
         if (repeatRef.current === 'one') {
           audio.currentTime = 0;
           audio.play();
         } else if (repeatRef.current === 'all') {
           setPlaying(false);
-          onTrackEnded?.();
+          onTrackEndedRef.current?.();
         } else {
           setPlaying(false);
         }
