@@ -1,0 +1,56 @@
+.audio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.audio-control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.audio-control-btn:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.audio-control-btn--play {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+}
+
+.audio-control-btn--play:hover:not(:disabled) {
+  border-color: #1e7a6e;
+  background: #f0fdf4;
+}
+
+.audio-control-btn--active {
+  background: #dcfce7;
+  border-color: #1e7a6e;
+  color: #1e7a6e;
+}
+
+.audio-control-btn--speed {
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: system-ui, sans-serif;
+}
+
+.audio-control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

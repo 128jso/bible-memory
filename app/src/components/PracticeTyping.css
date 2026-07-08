@@ -1,0 +1,78 @@
+.practice-typing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  cursor: text;
+  min-height: 300px;
+}
+
+.practice-reference {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+}
+
+.practice-hint {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.practice-chars {
+  font-family: 'Georgia', serif;
+  font-size: 1.5rem;
+  line-height: 2.2;
+  max-width: 100%;
+  word-wrap: break-word;
+  text-align: left;
+  padding: 1.5rem;
+}
+
+.char {
+  display: inline;
+  transition: color 0.1s;
+}
+
+.char--correct {
+  color: #16a34a;
+}
+
+.char--incorrect {
+  color: #dc2626;
+  text-decoration: underline;
+}
+
+.char--pending {
+  color: #94a3b8;
+}
+
+.char--anchor {
+  color: #475569;
+}
+
+.char--space {
+  display: inline;
+  width: 0.35em;
+}
+
+.char--cursor {
+  border-bottom: 2px solid #2563eb;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    border-bottom-color: transparent;
+  }
+}
+
+.practice-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}

@@ -1,0 +1,319 @@
+html.dark body {
+  background: #1a1b2e;
+  color: #e2e8f0;
+}
+
+html.dark .app {
+  background: #1a1b2e;
+}
+
+html.dark .app-header {
+  background: #242538;
+  border-bottom-color: #2e3048;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .app-title {
+  color: #e2e8f0;
+}
+
+html.dark .app-title:hover {
+  color: #1e7a6e;
+}
+
+html.dark .app-loading,
+html.dark .user-name,
+html.dark .settings-btn {
+  color: #94a3b8;
+}
+
+html.dark .settings-btn:hover {
+  color: #e2e8f0;
+  background: #2e3048;
+}
+
+html.dark .signout-btn {
+  border-color: #2e3048;
+  color: #94a3b8;
+}
+
+html.dark .signout-btn:hover {
+  background: #2e3048;
+  color: #e2e8f0;
+}
+
+html.dark .settings,
+html.dark .dashboard,
+html.dark .collection-view,
+html.dark .practice-view,
+html.dark .login {
+  background: #1a1b2e;
+  color: #e2e8f0;
+}
+
+html.dark .settings-section,
+html.dark .card,
+html.dark .verse-card,
+html.dark .collection-card,
+html.dark .practice-card {
+  background: #242538;
+  border-color: #2e3048;
+  color: #e2e8f0;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4 {
+  color: #e2e8f0;
+}
+
+html.dark .muted,
+html.dark .subtitle,
+html.dark .hint {
+  color: #94a3b8;
+}
+
+html.dark input[type="text"],
+html.dark input[type="email"],
+html.dark input[type="password"],
+html.dark textarea,
+html.dark select {
+  background: #242538;
+  border-color: #2e3048;
+  color: #e2e8f0;
+}
+
+html.dark input[type="text"]::placeholder,
+html.dark input[type="email"]::placeholder,
+html.dark input[type="password"]::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8;
+}
+
+html.dark .back-btn {
+  color: #94a3b8;
+}
+
+html.dark .back-btn:hover {
+  color: #e2e8f0;
+}
+
+html.dark button {
+  color: inherit;
+}
+
+html.dark .settings-toggle {
+  color: #e2e8f0;
+}
+
+html.dark .settings-header h2 {
+  color: #e2e8f0;
+}
+
+html.dark .btn-settings {
+  background: #2e3048;
+  border-color: #3d3f5c;
+  color: #e2e8f0;
+}
+
+html.dark .btn-settings:hover {
+  background: #3d3f5c;
+}
+
+html.dark .collection-btn,
+html.dark .verse-btn,
+html.dark .due-btn {
+  background: #242538;
+  border-color: #2e3048;
+  color: #e2e8f0;
+}
+
+html.dark .collection-btn:hover,
+html.dark .verse-btn:hover,
+html.dark .due-btn:hover {
+  background: #2e3048;
+  border-color: #3d3f5c;
+}
+
+html.dark .collection-name,
+html.dark .verse-reference,
+html.dark .due-reference {
+  color: #e2e8f0;
+}
+
+html.dark .collection-count,
+html.dark .verse-next-review,
+html.dark .due-collection {
+  color: #94a3b8;
+}
+
+html.dark .due-section {
+  background: linear-gradient(135deg, #2a2520 0%, #342d20 100%);
+  border-color: #4d3f1a;
+}
+
+html.dark .due-section h2 {
+  color: #fbbf24;
+}
+
+html.dark .add-verse-form {
+  background: #242538;
+  border-color: #2e3048;
+}
+
+html.dark .empty-state {
+  background: #242538;
+  border-color: #2e3048;
+  color: #94a3b8;
+}
+
+html.dark .practice-reference {
+  color: #e2e8f0;
+}
+
+html.dark .practice-hint {
+  color: #94a3b8;
+}
+
+html.dark .practice-chars {
+  color: #94a3b8;
+}
+
+html.dark .char--correct {
+  color: #34d399;
+}
+
+html.dark .char--incorrect {
+  color: #f87171;
+}
+
+html.dark .char--anchor {
+  color: #94a3b8;
+}
+
+html.dark .char--pending {
+  color: #4b5563;
+}
+
+html.dark .result-score {
+  color: #34d399;
+}
+
+html.dark .result-next-review {
+  color: #94a3b8;
+}
+
+html.dark .back-btn {
+  background: #2e3048;
+  border-color: #3d3f5c;
+  color: #e2e8f0;
+}
+
+html.dark .back-btn:hover {
+  background: #3d3f5c;
+  color: #ffffff;
+}
+
+html.dark .difficulty-toggle {
+  border-color: #3d3f5c;
+}
+
+html.dark .difficulty-btn {
+  background: #2e3048;
+  color: #94a3b8;
+  border-color: #3d3f5c;
+}
+
+html.dark .difficulty-btn:not(:last-child) {
+  border-right-color: #3d3f5c;
+}
+
+html.dark .difficulty-btn:hover:not(.difficulty-btn--active) {
+  background: #3d3f5c;
+  color: #e2e8f0;
+}
+
+html.dark .difficulty-btn--active {
+  background: #1e7a6e;
+  color: white;
+}
+
+html.dark .login-card {
+  background: #242538;
+  border-color: #2e3048;
+}
+
+html.dark .login-card h1 {
+  color: #e2e8f0;
+}
+
+html.dark .login-card p {
+  color: #94a3b8;
+}
+
+html.dark .btn-small {
+  background: #2e3048;
+  border-color: #3d3f5c;
+  color: #e2e8f0;
+}
+
+html.dark .btn-small:hover {
+  background: #3d3f5c;
+  border-color: #4d4f6c;
+}
+
+html.dark .btn-small.btn-primary {
+  background: #1e7a6e;
+  border-color: #1e7a6e;
+  color: white;
+}
+
+html.dark .btn-small.btn-primary:hover {
+  background: #166b60;
+}
+
+html.dark .delete-btn {
+  color: #4d4f6c;
+}
+
+html.dark .delete-btn:hover {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+html.dark .collections-header h2 {
+  color: #94a3b8;
+}
+
+html.dark .audio-bar {
+  background: #242538;
+  border-top-color: #2e3048;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .audio-control-btn {
+  background: #2e3048;
+  border-color: #3d3f5c;
+  color: #e2e8f0;
+}
+
+html.dark .audio-control-btn:hover:not(:disabled) {
+  background: #3d3f5c;
+}
+
+html.dark .audio-control-btn--play {
+  background: #1a1b2e;
+  border-color: #3d3f5c;
+}
+
+html.dark .audio-control-btn--play:hover:not(:disabled) {
+  border-color: #1e7a6e;
+  background: rgba(30, 122, 110, 0.15);
+}
+
+html.dark .audio-control-btn--active {
+  background: rgba(30, 122, 110, 0.2);
+  border-color: #1e7a6e;
+  color: #34d399;
+}
